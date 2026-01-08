@@ -80,11 +80,11 @@ const MagneticButton = ({ children, className }) => {
 
 const TemplateStream = () => {
   const templates = [
-    { id: 1, name: "Crypto Dashboard", img: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2000" },
-    { id: 2, name: "E-Commerce App", img: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2000" },
-    { id: 3, name: "Social Connect", img: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2000" },
-    { id: 4, name: "Neural Analytics", img: "https://images.unsplash.com/photo-1558494949-ef8b5655d939?q=80&w=2000" },
-    { id: 5, name: "Banking Pro", img: "https://images.unsplash.com/photo-1550565118-3d1428df732f?q=80&w=2000" },
+    { id: 1, name: "Crypto Dashboard", img: "crypto.jpg" },
+    { id: 2, name: "E-Commerce App", img: "comerce.jpg" },
+    { id: 3, name: "Social Connect", img: "futuristic.jpg" },
+    { id: 4, name: "Neural Analytics", img: "neural.jpg" },
+    { id: 5, name: "Banking Pro", img: "bank.jpg" },
   ];
 
   return (
@@ -286,7 +286,16 @@ function App() {
 
       <header className="navbar">
         <div className="navbar-inner">
-          <div className="logo"><span className="logo-icon">✦</span> Laydown</div>
+          <div className="logo">
+  <motion.span 
+    animate={{ rotate: [0, 360] }}
+    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+    className="logo-icon"
+  >
+    ✦
+  </motion.span> 
+  <span className="logo-text">Laydown</span>
+</div>
           <nav className="nav-menu">
             <a href="#features">Features</a>
             <a href="#templates">Templates</a>
