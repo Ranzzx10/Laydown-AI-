@@ -413,7 +413,149 @@ body { background: #03000a; color: white; font-family: 'Plus Jakarta Sans', sans
 }
 
 /* Responsif Footer */
-@media (max-width: 992px) {
+/* --- MOBILE OPTIMIZATION (Fixing the Vibe for Phone) --- */
+
+@media (max-width: 768px) {
+  /* 1. Reset Container agar tidak terlalu mepet pinggir */
+  .nav-menu {
+    display: none; /* Sembunyikan link teks agar tidak menumpuk */
+  }
+  
+  .navbar-inner {
+    padding: 0 15px;
+    height: 60px;
+  }
+
+  .btn-launch {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+  .hero {
+    padding-top: 100px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+    padding: 0 10px;
+  }
+
+  .hero-quick-tags {
+    flex-wrap: wrap; /* Agar tag tidak keluar layar */
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+  }
+
+  .hero-quick-tags span {
+    width: 100%; /* Tulisan "Trending:" di baris sendiri */
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+  }
+
+  .hero-quick-tags button {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+  }
+
+  /* 3. TEMPLATES: Card & Font */
+  .templates-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .templates-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .slide-card {
+    min-width: 220px; /* Card lebih kecil di mobile */
+    height: 150px;
+  }
+
+  .template-name {
+    font-size: 0.8rem;
+  }
+  .container {
+    padding: 0 20px;
+  }
+
+  /* 2. Fix Hero Section */
+  .hero h1 {
+    font-size: 2.5rem; /* Perkecil ukuran font judul agar tidak pecah */
+    line-height: 1.2;
+  }
+  
+  .hero-input-group {
+    width: 100%;
+  }
+
+  /* 3. Fix Bento Grid (Jadikan 1 kolom saja agar rapi) */
+  .bento-grid {
+    grid-template-columns: 1fr !important; /* Paksa jadi satu kolom */
+    gap: 15px;
+  }
+
+  .bento-card.span-2 {
+    grid-column: span 1 !important; /* Hilangkan span 2 di mobile */
+  }
+
+  /* 4. Fix Robot Section (Sentralisasi di HP) */
+  .robot-section-centered .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .robot-head-futuristic {
+    transform: scale(0.8); /* Perkecil robot sedikit agar pas di layar HP */
+    margin: 0 auto;
+  }
+
+  .robot-floating-wrapper {
+    margin-bottom: 30px;
+  }
+
+  /* 5. Fix Navbar (Sembunyikan menu atau buat stack) */
+  .nav-menu {
+    display: none; /* Sembunyikan menu nav di mobile untuk sementara agar bersih */
+  }
+
+  .navbar-inner {
+    justify-content: space-between;
+  }
+
+  /* 6. Fix Template Slider */
+  .slider-track {
+    gap: 10px;
+  }
+  
+  .slide-card {
+    min-width: 250px; /* Perkecil ukuran card template di HP */
+  }
+
+  /* 7. CTA Section */
+  .cta-card {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .btn-launch-large {
+    width: 100%; /* Tombol jadi lebar penuh agar mudah ditekan jempol */
+    justify-content: center;
+  }
+}
+
+/* Tablet Small Fix */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .text-gradient {
+    font-size: 0.9rem;
+  }
+} 
   .footer-grid {
     flex-direction: column;
     text-align: center;
@@ -431,4 +573,3 @@ body { background: #03000a; color: white; font-family: 'Plus Jakarta Sans', sans
     flex-direction: column;
     gap: 20px;
   }
-}
