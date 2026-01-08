@@ -3,6 +3,27 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Sparkles, Send, Zap, Cpu, Globe, Shield, Plus, ArrowRight } from 'lucide-react'; 
 import './App.css';
 
+// --- ANIMATION VARIANTS (Jadwal Animasi) ---
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1, // Muncul satu per satu dengan jeda 0.1 detik
+      delayChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.5, ease: "easeOut" } 
+  }
+};
+
 // --- COMPONENTS ---
 
 const MouseGlow = () => {
@@ -90,15 +111,21 @@ const TemplateStream = () => {
   return (
     <section className="templates-section">
       <div className="container">
-        <div className="templates-header">
+        <motion.div 
+          className="templates-header"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <div>
-            <h2>Templates</h2>
-            <p>Thousands of designs you can use right now!</p>
+            <motion.h2 variants={itemVariants}>Templates</motion.h2>
+            <motion.p variants={itemVariants}>Thousands of designs you can use right now!</motion.p>
           </div>
-          <a href="#templates" className="btn-text-link">
+          <motion.a variants={itemVariants} href="#templates" className="btn-text-link">
             Start using template for free <ArrowRight size={16} />
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
       </div>
       <div className="slider-container">
         <div className="slider-track">
@@ -119,7 +146,7 @@ const TemplateStream = () => {
 
 const RobotSection = () => {
   const [lookPos, setLookPos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false); // State untuk Easter Egg
+  const [isHovered, setIsHovered] = useState(false);
   const robotRef = useRef(null);
 
   useEffect(() => {
@@ -143,18 +170,20 @@ const RobotSection = () => {
   return (
     <section className="robot-section-centered">
       <div className="container">
-        <div 
+        <motion.div 
           className="robot-visual-centered" 
           ref={robotRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
         >
           <motion.div 
             className="robot-floating-wrapper"
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           >
-            {/* SPEECH BUBBLE EASTER EGG */}
             <AnimatePresence>
               {isHovered && (
                 <motion.div 
@@ -174,7 +203,7 @@ const RobotSection = () => {
               animate={{ 
                 rotateY: lookPos.x, 
                 rotateX: -lookPos.y,
-                scale: isHovered ? 1.05 : 1 // Sedikit membesar saat disentuh
+                scale: isHovered ? 1.05 : 1 
               }}
               transition={{ type: "spring", stiffness: 70, damping: 15 }}
             >
@@ -196,28 +225,34 @@ const RobotSection = () => {
                   </div>
                 </div>
 
-                {/* ANIMASI MULUT BERBICARA */}
+                {/* LOGIKA MULUT: Hanya gerak saat isHovered (Mouse nyentuh) */}
                 <motion.div 
                   className="robot-mouth-ai" 
                   animate={isHovered ? {
                     height: [4, 12, 4, 15, 4],
                     width: [50, 60, 45, 65, 50],
                     backgroundColor: ["#7c5cff", "#00f2fe", "#7c5cff"]
-                  } : { height: 4, width: 50 }}
-                  transition={{ duration: 0.4, repeat: Infinity }}
+                  } : { height: 4, width: 50, backgroundColor: "#7c5cff" }}
+                  transition={isHovered ? { duration: 0.4, repeat: Infinity } : { duration: 0.3 }}
                 />
               </div>
               <div className="top-sensor" />
             </motion.div>
             <div className="robot-shadow" />
           </motion.div>
-        </div>
+        </motion.div>
 
-        <div className="robot-content-bottom">
-          <span className="text-gradient">Neural Node V.2</span>
-          <h2>The Intelligence Inside Laydown</h2>
-          {/* ... sisanya tetap sama ... */}
-        </div>
+        <motion.div 
+          className="robot-content-bottom"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <motion.span variants={itemVariants} className="text-gradient">Neural Node V.2</motion.span>
+          <motion.h2 variants={itemVariants}>The Intelligence Inside Laydown</motion.h2>
+          <motion.p variants={itemVariants}>Automating your workflow with precision and speed.</motion.p>
+        </motion.div>
       </div>
     </section>
   );
@@ -226,7 +261,7 @@ const RobotSection = () => {
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <motion.div className={`faq-item ${isOpen ? 'active' : ''}`}>
+    <motion.div variants={itemVariants} className={`faq-item ${isOpen ? 'active' : ''}`}>
       <button className="faq-question" onClick={() => setIsOpen(!isOpen)}>
         <span>{question}</span>
         <motion.div animate={{ rotate: isOpen ? 45 : 0 }}><Plus size={20} color="#7c5cff" /></motion.div>
@@ -287,15 +322,15 @@ function App() {
       <header className="navbar">
         <div className="navbar-inner">
           <div className="logo">
-  <motion.span 
-    animate={{ rotate: [0, 360] }}
-    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-    className="logo-icon"
-  >
-    ✦
-  </motion.span> 
-  <span className="logo-text">Laydown</span>
-</div>
+            <motion.span 
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              className="logo-icon"
+            >
+              ✦
+            </motion.span> 
+            <span className="logo-text">Laydown</span>
+          </div>
           <nav className="nav-menu">
             <a href="#features">Features</a>
             <a href="#templates">Templates</a>
@@ -309,201 +344,165 @@ function App() {
         </div>
       </header>
 
-      
-<main>
-  <div className="section-transition hero-wrapper">
-    <section className="hero">
-      <motion.div 
-        initial={{ opacity: 0, y: 50 }} 
-        whileInView={{ opacity: 1, y: 0 }} 
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="container"
-      >
-        <div className="badge-promo"><Sparkles size={14} /> V2.0 Orbital Edition</div>
-        <h1>Explore the Future of <br /><span>AI Intelligence</span></h1>
-        <p className="hero-desc">Take your ideas to the next dimension with an intelligent agent based on neural networks.</p>
+      <main>
+        {/* HERO SECTION - Staggered */}
+        <div className="section-transition hero-wrapper">
+          <section className="hero">
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="container"
+            >
+              <motion.div variants={itemVariants} className="badge-promo"><Sparkles size={14} /> V2.0 Orbital Edition</motion.div>
+              <motion.h1 variants={itemVariants}>Explore the Future of <br /><span>AI Intelligence</span></motion.h1>
+              <motion.p variants={itemVariants} className="hero-desc">Take your ideas to the next dimension with an intelligent agent based on neural networks.</motion.p>
+              
+              <motion.div variants={itemVariants} className="hero-input-group">
+                <div className="hero-input">
+                  <div className="typewriter-container">
+                    <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                    {inputValue === "" && <span className="fake-placeholder">{displayText}<span className="cursor">|</span></span>}
+                  </div>
+                  <button className="btn-send"><Send size={18} /></button>
+                </div>
+                <div className="hero-quick-tags">
+                  <span>Trending:</span>
+                  <button>#WebDesign</button>
+                  <button>#NeuralArt</button>
+                  <button>#VectorGen</button>
+                </div>
+              </motion.div>
+            </motion.div>
+            <ScrollIndicator />
+          </section>
+        </div>
+
+        <TemplateStream />
+
+        {/* FEATURES SECTION - Staggered */}
+        <section className="features" id="features">
+          <div className="container">
+            <motion.div 
+              className="section-header"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <motion.span variants={itemVariants} className="text-gradient">Capabilities</motion.span>
+              <motion.h2 variants={itemVariants}>Powering Creativity</motion.h2>
+            </motion.div>
+
+            <motion.div 
+              className="bento-grid"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {[
+                { title: "Instant Generation", desc: "Change text to UI instantly.", icon: <Zap />, span: "span-2", color: "124, 92, 255" },
+                { title: "Neural Core", desc: "Advanced LLM for design.", icon: <Cpu />, color: "6, 182, 212" },
+                { title: "Global Access", desc: "Real-time sync across devices.", icon: <Globe />, color: "232, 121, 249" },
+                { title: "Secure Nodes", desc: "Military grade encryption.", icon: <Shield />, span: "span-2", color: "59, 130, 246" }
+              ].map((card, i) => (
+                <motion.div 
+                  key={i} 
+                  variants={itemVariants}
+                  className={`bento-card ${card.span || ""}`} 
+                  style={{ '--glow-color': card.color }}
+                >
+                  <div className="card-icon">{card.icon}</div>
+                  <h3>{card.title}</h3>
+                  <p>{card.desc}</p>
+                  <div className="bento-glow"></div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        <RobotSection />
+
+        {/* FAQ SECTION - Staggered */}
+        <section className="faq" id="faq">
+          <div className="container">
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="section-header"
+            >
+              <motion.h2 variants={itemVariants}>FAQ</motion.h2>
+            </motion.div>
+            <motion.div 
+              className="faq-container"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <FaqItem question="What is Laydown AI?" answer="Laydown AI is an ecosystem designed to bridge human creativity and machine learning." />
+              <FaqItem question="How secure is my data?" answer="We use military-grade AES-256 encryption for all assets." />
+              <FaqItem question="Can I export to code?" answer="Yes, supports direct export to React and Tailwind CSS." />
+            </motion.div>
+          </div>
+        </section>
         
-        <div className="hero-input-group">
-          <div className="hero-input">
-            <div className="typewriter-container">
-              <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-              {inputValue === "" && <span className="fake-placeholder">{displayText}<span className="cursor">|</span></span>}
-            </div>
-            <button className="btn-send"><Send size={18} /></button>
-          </div>
-          <div className="hero-quick-tags">
-            <span>Trending:</span>
-            <button>#WebDesign</button>
-            <button>#NeuralArt</button>
-            <button>#VectorGen</button>
-          </div>
-        </div>
-      </motion.div>
-      <ScrollIndicator />
-    </section>
-  </div>
-
-  <motion.div 
-    initial={{ opacity: 0, y: 50 }} 
-    whileInView={{ opacity: 1, y: 0 }} 
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.8 }}
-    className="section-transition templates-wrapper"
-  >
-    <TemplateStream />
-  </motion.div>
-<motion.div 
-    initial={{ opacity: 0, y: 50 }} 
-    whileInView={{ opacity: 1, y: 0 }} 
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.8 }}
-    className="section-transition features-wrapper"
-  >
-    <section className="features" id="features">
-      <div className="container">
-        <div className="section-header">
-          <span className="text-gradient">Capabilities</span>
-          <h2>Powering Creativity</h2>
-        </div>
-        <div className="bento-grid">
-          {[
-            { title: "Instant Generation", desc: "Change text to UI instantly with neural processing.", icon: <Zap />, span: "span-2", color: "124, 92, 255" },
-            { title: "Neural Core", desc: "The most advanced LLM for design.", icon: <Cpu />, color: "6, 182, 212" },
-            { title: "Global Access", desc: "Real-time sync across all your devices.", icon: <Globe />, color: "232, 121, 249" },
-            { title: "Secure Nodes", desc: "Military grade encryption for your assets.", icon: <Shield />, span: "span-2", color: "59, 130, 246" }
-          ].map((card, i) => (
-            <div key={i} className={`bento-card ${card.span || ""}`} style={{ '--glow-color': card.color }}>
-              <div className="card-icon">{card.icon}</div>
-              <h3>{card.title}</h3>
-              <p>{card.desc}</p>
-              <div className="bento-glow"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  </motion.div>
-  <motion.div 
-    initial={{ opacity: 0, y: 50 }} 
-    whileInView={{ opacity: 1, y: 0 }} 
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.8 }}
-    className="section-transition features-wrapper"
-  >
-    <section className="features" id="features">
-      {/* ... isi bento grid sama ... */}
-    </section>
-  </motion.div>
-
-  <motion.div 
-    initial={{ opacity: 0, scale: 0.9 }} 
-    whileInView={{ opacity: 1, scale: 1 }} 
-    viewport={{ once: true, amount: 0.3 }}
-    transition={{ duration: 0.8 }}
-    className="section-transition robot-wrapper"
-  >
-    <RobotSection />
-  </motion.div>
-
-  <div className="section-transition faq-wrapper">
-    <section className="faq" id="faq">
-      <div className="container">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
+        {/* FINAL CTA */}
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="section-header"
+          className="final-cta"
         >
-          <h2>FAQ</h2>
-        </motion.div>
-        <div className="faq-container">
-          <FaqItem 
-            question="What is Laydown AI?" 
-            answer="Laydown AI is an advanced intelligent ecosystem designed to bridge the gap between human creativity and neural machine learning. It helps you automate complex UI workflows instantly." 
-          />
-          <FaqItem 
-            question="How secure is my architectural data?" 
-            answer="We use military-grade AES-256 encryption. Your data is processed in isolated neural nodes, ensuring that your creative assets remain private and protected at all times." 
-          />
-          <FaqItem 
-            question="Can I export designs to production code?" 
-            answer="Absolutely. Laydown supports direct export to React, Tailwind CSS, and Framer Motion structures, making the transition from design to live product seamless." 
-          />
-        </div>
-      </div>
-    </section>
-    
-    <motion.section 
-  initial={{ opacity: 0, y: 50 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  className="final-cta"
->
-  <div className="container">
-    <div className="cta-card">
-      {/* Background Animasi AI (Mesh Gradient) */}
-      <div className="cta-mesh-bg"></div>
-      
-      <div className="cta-content">
-        <h2>Ready to build the future?</h2>
-        <p>Join 10,000+ developers building with Laydown AI.</p>
-        
-        {/* Tombol dengan Jarak (Margin) yang Pas */}
-        <div className="cta-action-wrapper">
-          <MagneticButton className="btn-launch-large">
-            <span>Get Started for Free</span>
-            <ArrowRight size={20} />
-          </MagneticButton>
-        </div>
-      </div>
+          <div className="container">
+            <div className="cta-card">
+              <div className="cta-mesh-bg"></div>
+              <div className="cta-content">
+                <h2>Ready to build the future?</h2>
+                <p>Join 10,000+ developers building with Laydown AI.</p>
+                <div className="cta-action-wrapper">
+                  <MagneticButton className="btn-launch-large">
+                    <span>Get Started for Free</span>
+                    <ArrowRight size={20} />
+                  </MagneticButton>
+                </div>
+              </div>
+              <div className="cta-glow-emitter"></div>
+            </div>
+          </div>
+        </motion.section>
 
-      {/* Efek Cahaya Tambahan */}
-      <div className="cta-glow-emitter"></div>
-    </div>
-  </div>
-</motion.section>
-    <EasterEgg />
-  </div>
-</main>
+        <EasterEgg />
+      </main>
 
       <footer className="footer-pro">
-  <div className="container footer-grid">
-    <div className="footer-brand">
-      <div className="logo"><span className="logo-icon">✦</span> Laydown</div>
-      <p>Next-gen AI interface for modern creators. Build beyond limits.</p>
-    </div>
-    
-    <div className="footer-links-container">
-      <div className="footer-col">
-        <h4>Product</h4>
-        <a href="#features">Features</a>
-        <a href="#templates">Templates</a>
-        <a href="#pricing">Pricing</a>
-      </div>
-      <div className="footer-col">
-        <h4>Resources</h4>
-        <a href="#docs">Documentation</a>
-        <a href="#api">API Reference</a>
-        <a href="#community">Community</a>
-      </div>
-      <div className="footer-col">
-        <h4>Social</h4>
-        <a href="#">Twitter</a>
-        <a href="#">Discord</a>
-        <a href="#">LinkedIn</a>
-      </div>
-    </div>
-  </div>
-  
-  <div className="container footer-bottom">
-    <p>© 2026 Laydown Space Systems. All rights reserved.</p>
-    <div className="footer-bottom-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-    </div>
-  </div>
-</footer>
+        <div className="container footer-grid">
+          <div className="footer-brand">
+            <div className="logo"><span className="logo-icon">✦</span> Laydown</div>
+            <p>Next-gen AI interface for modern creators.</p>
+          </div>
+          <div className="footer-links-container">
+            <div className="footer-col">
+              <h4>Product</h4>
+              <a href="#features">Features</a>
+              <a href="#templates">Templates</a>
+            </div>
+            <div className="footer-col">
+              <h4>Social</h4>
+              <a href="#">Twitter</a>
+              <a href="#">Discord</a>
+            </div>
+          </div>
+        </div>
+        <div className="container footer-bottom">
+          <p>© 2026 Laydown Space Systems. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 }
