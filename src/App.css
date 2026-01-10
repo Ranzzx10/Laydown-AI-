@@ -345,71 +345,171 @@ body { background: #03000a; color: white; font-family: 'Plus Jakarta Sans', sans
 }
 
 /* --- FOOTER & CTA GLOW EFFECT --- */
+/* --- FINAL PRECISION FOOTER --- */
 .footer-pro {
-  background: #03000a;
-  padding: 100px 0 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: #020202;
+  padding: 120px 0 60px;
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .footer-grid {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-start; /* Menjaga semua konten sejajar di atas */
   gap: 50px;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
 }
 
+/* BAGIAN KIRI */
 .footer-brand {
-  flex: 1;
-  max-width: 320px;
+  flex: 1.5; /* Memberi ruang lebih untuk teks motto */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Memaksa semua konten brand ke KIRI */
+  text-align: left;
 }
 
-.footer-links-container {
+.footer-motto {
+  margin: 30px 0;
+}
+
+.footer-motto p {
+  font-size: 2.2rem; /* Diperbesar sedikit agar lebih impactful */
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: #fff;
+}
+
+.footer-motto .sub-motto {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 20px;
+  max-width: 420px;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.footer-status-pills {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px; /* Jarak dari sub-motto */
+}
+
+/* BAGIAN KANAN */
+.footer-links-wrapper {
   flex: 2;
   display: flex;
-  justify-content: flex-end;
-  gap: 80px;
+  justify-content: flex-end; /* Memindahkan grup link ke sisi KANAN */
+  gap: 80px; /* Jarak antar kolom link */
+}
+
+.footer-col {
+  width: 160px; /* MEMAKSA lebar kolom sama agar lurus */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Memastikan tulisan & link lurus ke kiri di dalam kolomnya */
+  text-align: left;
+}
+
+.col-number {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #7c5cff;
+  margin-bottom: 12px;
+  opacity: 0.6;
+  letter-spacing: 2px;
+  display: block; /* Memastikan nomor ada di baris sendiri */
 }
 
 .footer-col h4 {
-  color: white;
-  font-size: 16px;
-  margin-bottom: 25px;
-  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 30px; /* Jarak seragam ke link di bawahnya */
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
-.footer-col a {
-  display: block;
-  color: rgba(255, 255, 255, 0.5);
+.link-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Jarak antar link yang konsisten */
+}
+
+.link-items a {
+  color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
-  font-size: 14px;
-  margin-bottom: 12px;
-  transition: 0.3s;
+  font-size: 0.9rem;
+  transition: 0.3s ease;
+  white-space: nowrap; /* Mencegah teks link turun ke bawah jika kolom sempit */
 }
 
-.footer-col a:hover {
+.link-items a:hover {
   color: #7c5cff;
-  padding-left: 5px;
+  transform: translateX(5px);
 }
 
+/* BAGIAN BAWAH */
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 40px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.3);
 }
 
-.footer-bottom-links {
+.copyright {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.footer-tech {
   display: flex;
-  gap: 24px;
+  align-items: center;
+  gap: 15px;
 }
 
-.footer-bottom-links a {
-  color: rgba(255, 255, 255, 0.3);
-  text-decoration: none;
+.tech-tag {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 5px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* RESPONSIVE FIX */
+@media (max-width: 1024px) {
+ .footer-links-wrapper {
+    justify-content: center; /* Di tablet/HP jadi di tengah */
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .footer-col {
+    width: 120px; /* Lebih kecil di mobile */
+    align-items: center; /* Teks jadi di tengah saat mobile */
+    text-align: center;
+  }
+  .footer-links-wrapper {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end; /* Memastikan seluruh grup link nempel di kanan */
+  gap: 100px; /* Jarak tetap antar kolom */
+}
+  .footer-brand {
+    align-items: center;
+    text-align: center;
+  }
+  .footer-motto .sub-motto {
+    margin: 20px auto;
+  }
+  .footer-status-pills {
+    justify-content: center;
+  }
 }
 
 /* Responsif Footer */
@@ -573,3 +673,31 @@ body { background: #03000a; color: white; font-family: 'Plus Jakarta Sans', sans
     flex-direction: column;
     gap: 20px;
   }
+@media (max-width: 768px) {
+  /* ... kode mobile lainnya ... */
+
+  .templates-header {
+    flex-direction: column; /* Ubah dari samping ke tumpuk atas-bawah */
+    text-align: center;     /* Paksa teks ke tengah */
+    align-items: center;    /* Pastikan div pembungkusnya di tengah */
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .templates-header h2 {
+    font-size: 2.2rem;     /* Ukuran font yang pas untuk HP */
+    width: 100%;           /* Pastikan memenuhi lebar container */
+  }
+
+  .templates-header p {
+    font-size: 0.95rem;
+    margin: 10px auto 0;
+    max-width: 280px;      /* Batasi lebar agar baris teks enak dilihat */
+  }
+
+  .btn-text-link {
+    justify-content: center; /* Pastikan icon panah & teks tombol juga di tengah */
+    width: 100%;
+    margin-top: 10px;
+  }
+}

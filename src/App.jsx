@@ -481,26 +481,76 @@ function App() {
       </main>
 
       <footer className="footer-pro">
+        <div className="footer-glow-line" />
         <div className="container footer-grid">
+          
+          {/* BAGIAN KIRI: BRANDING & MOTTO */}
           <div className="footer-brand">
-            <div className="logo"><span className="logo-icon">✦</span> Laydown</div>
-            <p>Next-gen AI interface for modern creators.</p>
-          </div>
-          <div className="footer-links-container">
-            <div className="footer-col">
-              <h4>Product</h4>
-              <a href="#features">Features</a>
-              <a href="#templates">Templates</a>
+            <div className="logo">
+              <motion.span 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="logo-icon"
+              >✦</motion.span> 
+              Laydown
             </div>
+            
+            <div className="footer-motto">
+              <p>Architecting <span className="text-highlight">Next-Gen AI</span> Interfaces</p>
+              <p className="sub-motto">Bridging the gap between human creativity and neural intelligence for creators worldwide.</p>
+            </div>
+
+            <div className="footer-status-pills">
+              <div className="status-pill">
+                <span className="dot" /> Server Online
+              </div>
+              <div className="status-pill v2">V2.0 Orbital</div>
+            </div>
+          </div>
+
+          {/* BAGIAN KANAN: LINKS (Dibuat Menyebar) */}
+          <div className="footer-links-wrapper">
             <div className="footer-col">
-              <h4>Social</h4>
-              <a href="#">Twitter</a>
-              <a href="#">Discord</a>
+              <span className="col-number">01</span>
+              <h4>EXPLORE</h4>
+              <div className="link-items">
+                <a href="#features">Capabilities</a>
+                <a href="#templates">Gallery</a>
+                <a href="#pricing">Premium</a>
+              </div>
+            </div>
+            
+            <div className="footer-col">
+              <span className="col-number">02</span>
+              <h4>RESOURCES</h4>
+              <div className="link-items">
+                <a href="#docs">Documentation</a>
+                <a href="#changelog">Updates</a>
+                <a href="#faq">Help Center</a>
+              </div>
+            </div>
+
+            <div className="footer-col">
+              <span className="col-number">03</span>
+              <h4>CONNECT</h4>
+              <div className="link-items">
+                <a href="https://linkedin.com/in/zahraanzaki" target="_blank">LinkedIn ↗</a>
+                <a href="https://github.com/ranzz" target="_blank">GitHub ↗</a>
+                <a href="mailto:ranzzwork10@gmail.com">Contact</a>
+              </div>
             </div>
           </div>
         </div>
+
         <div className="container footer-bottom">
-          <p>© 2026 Laydown Space Systems. All rights reserved.</p>
+          <p className="copyright">© 2026 LAYDOWN SPACE SYSTEMS. BEYOND THE INTERFACE.</p>
+          <div className="footer-tech">
+            <span className="tech-label">POWERED BY</span>
+            <div className="tech-icons">
+              <span className="tech-tag">React</span>
+              <span className="tech-tag">Framer Motion</span>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
